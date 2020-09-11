@@ -7,7 +7,7 @@ public class Main {
 	
 	
 	public static void main(String[] args) {
-		//PricePercentageChangeHandler.processHistoricData();
+		PricePercentageChangeHandler.processHistoricData();
 		PricePercentageChangeHandler.mergeDailyFile("cm31AUG2020bhav.csv");//"cm31AUG2020bhav.csv");		
 
 		
