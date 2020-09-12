@@ -23,8 +23,8 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 public class PercentageChangeFileWriter  extends AbstractXlsWriter{
 	
-	private final String TEMP_FILE = "C:\\Users\\sethi\\Desktop\\sharedata\\historic-data\\_Temp.xls";
-	private final String SUMMARY_FILE = "C:\\Users\\sethi\\Desktop\\sharedata\\historic-data\\_Summary.xlsx";
+	private final String TEMP_FILE = "C:\\Users\\sethi\\Desktop\\sharedata\\_Temp.xls";
+	private final String SUMMARY_FILE = "C:\\Users\\sethi\\Desktop\\sharedata\\_PricePercentageChange.xlsx";
 	static Workbook workbook=null;
 	static Sheet pricePercentageChange =null;
 	Map<String, Integer> headers=null;
@@ -102,7 +102,10 @@ public class PercentageChangeFileWriter  extends AbstractXlsWriter{
 		        Row row= getRow(e.getKey());
 		        if(row==null) row = addRow(e.getKey());
 		        Cell cell = row.getCell(cellIndex);
-		        cell.setCellStyle(floatStyle);
+		        if(cell==null) {
+		        	cell = row.createCell(cellIndex);
+			        cell.setCellStyle(floatStyle);		        	
+		        }
 				cell.setCellValue(e.getValue());
 			}
 	}

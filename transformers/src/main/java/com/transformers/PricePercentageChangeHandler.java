@@ -31,12 +31,13 @@ public class PricePercentageChangeHandler {
 	}
 
 	public static void mergeDailyFile(String fileName) {
+		System.out.println("Processing file "+ fileName);
 		
 		PercentageChangeFileWriter percentageIncreaseFileWriter=null;
 		
 		try {
 			percentageIncreaseFileWriter = new PercentageChangeFileWriter();
-			List<ShareDataADay> dailySharesData = ShareDailyDataReader.readFile("C:\\Users\\sethi\\Desktop\\sharedata\\historic-data\\dailydata\\"+fileName);
+			List<ShareDataADay> dailySharesData = ShareDailyDataReader.readFile("C:\\Users\\sethi\\Desktop\\sharedata\\daily-data\\"+fileName);
 			Map<String,Float> percentagePriceIncreaseForASymbol = new LinkedHashMap<String,Float>();
 			for(ShareDataADay sd: dailySharesData) {
 				Float pricePercentageChange = Calculator.calculatePricePercentageChange(sd);

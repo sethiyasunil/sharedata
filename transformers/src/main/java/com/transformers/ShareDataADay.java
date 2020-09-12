@@ -10,6 +10,10 @@ import lombok.Setter;
 @Builder
 public class ShareDataADay {
 	
+	@Override
+	public String toString() {
+		return "ShareDataADay [symbol=" + symbol + "]";
+	}
 	private String symbol;
 	private String series;
 	private LocalDate date;

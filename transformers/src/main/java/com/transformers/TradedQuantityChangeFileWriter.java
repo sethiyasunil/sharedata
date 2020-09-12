@@ -25,8 +25,8 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 public class TradedQuantityChangeFileWriter extends AbstractXlsWriter{
 	
-	private final String TEMP_FILE = "C:\\Users\\sethi\\Desktop\\sharedata\\historic-data\\_Temp_tradedQuantityPercentageChange.xls";
-	private final String SUMMARY_FILE = "C:\\Users\\sethi\\Desktop\\sharedata\\historic-data\\_TradedQuantityPercentageChange.xlsx";
+	private final String TEMP_FILE = "C:\\Users\\sethi\\Desktop\\sharedata\\historic-data\\_Temp.xls";
+	private final String SUMMARY_FILE = "C:\\Users\\sethi\\Desktop\\sharedata\\_TradedQuantityPercentageChange.xlsx";
 	static Workbook workbook=null;
 	static Sheet tradedQuantityPercentageChange =null;
 	Map<String, Integer> headers=null;
@@ -96,33 +96,19 @@ public class TradedQuantityChangeFileWriter extends AbstractXlsWriter{
 
 	//date - (symbol - tradedQuantityPercentageChange)
 	public void writeDataForMultipleSymbolsOnADate(LocalDate date, Map<String, Double> tradedQuantityPercentageChange) throws IOException {
-		try {
-			_writeDataForMultipleSymbolsOnADate(date, tradedQuantityPercentageChange);
-			excelFile.close();
-			FileOutputStream outputStream = new FileOutputStream(TEMP_FILE);
-            workbook.write(outputStream);
-            outputStream.close();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}finally {
-			workbook.close();
-		}
 		
-		Files.delete(Paths.get(SUMMARY_FILE));
-		Files.move(Paths.get(TEMP_FILE),Paths.get(SUMMARY_FILE));
-		
-	}
-	
-	private void _writeDataForMultipleSymbolsOnADate(LocalDate date, Map<String, Double> pi) {
-
 		Integer cellIndex = headers.get(dateAsString(date));
-		for(Entry<String,Double> e: pi.entrySet()) {
+		for(Entry<String,Double> e: tradedQuantityPercentageChange.entrySet()) {
 	        Row row= getRow(e.getKey());
 	        if(row==null) row = addRow(e.getKey());
 	        Cell cell = row.getCell(cellIndex);
-	        cell.setCellStyle(doubleStyle);
-			cell.setCellValue(e.getValue());
+	        if(cell==null) {
+	        	cell = row.createCell(cellIndex);
+		        cell.setCellStyle(doubleStyle);
+	        }	        
+			cell.setCellValue(e.getValue());	
 		}
 	}
+	
 
 }

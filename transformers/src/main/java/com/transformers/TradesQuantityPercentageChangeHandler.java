@@ -10,10 +10,8 @@ import java.util.stream.Collectors;
 
 public class TradesQuantityPercentageChangeHandler {
 	
-	
-	
-	
 	public static void processHistoricData() {
+
 		TradedQuantityChangeFileWriter tradedQuantityChangeFileWriter=null;
 		try {
 			tradedQuantityChangeFileWriter = new TradedQuantityChangeFileWriter();
@@ -38,25 +36,32 @@ public class TradesQuantityPercentageChangeHandler {
 		
 	}
 
-	public static void mergeDailyFile(String T_Minus2DayFile, String T_Minus1DayFile, LocalDate T_Minus1Date) {
+	public static void mergeDailyFile(String T_Minus1DayFile, String T_DayFile, LocalDate T_Date) {
 		
+		TradedQuantityChangeFileWriter tradedQuantityChangeFileWriter=null;
 		try {
-			List<ShareDataADay> TMinus2SharesData = ShareDailyDataReader.readFile("C:\\Users\\sethi\\Desktop\\sharedata\\historic-data\\dailydata\\"+T_Minus2DayFile);
-			Map<String, ShareDataADay> TMinus2DayTradedQuantity = TMinus2SharesData.stream().collect(Collectors.toMap(ShareDataADay::getSymbol, Function.identity()));
-			
-			List<ShareDataADay> TMinus1SharesData = ShareDailyDataReader.readFile("C:\\Users\\sethi\\Desktop\\sharedata\\historic-data\\dailydata\\"+T_Minus1DayFile);
+			List<ShareDataADay> TMinus1SharesData = ShareDailyDataReader.readFile("C:\\Users\\sethi\\Desktop\\sharedata\\daily-data\\"+T_Minus1DayFile);
 			Map<String, ShareDataADay> TMinus1DayTradedQuantity = TMinus1SharesData.stream().collect(Collectors.toMap(ShareDataADay::getSymbol, Function.identity()));
+			
+			List<ShareDataADay> TSharesData = ShareDailyDataReader.readFile("C:\\Users\\sethi\\Desktop\\sharedata\\daily-data\\"+T_DayFile);
+			Map<String, ShareDataADay> TDayTradedQuantity = TSharesData.stream().collect(Collectors.toMap(ShareDataADay::getSymbol, Function.identity()));
 			
 			
 			Map<String,Double> tradedQuantityPercentageChangeForSymbols = new LinkedHashMap<String,Double>();
-			for(Entry<String, ShareDataADay> sd: TMinus2DayTradedQuantity.entrySet()) {
-				Double tradedQuantityPercentageChange = Calculator.calculateTotalTradedQuantityPercentageChange(sd.getValue(),TMinus1DayTradedQuantity.get(sd.getKey()));
+			for(Entry<String, ShareDataADay> sd: TMinus1DayTradedQuantity.entrySet()) {
+				Double tradedQuantityPercentageChange = Calculator.calculateTotalTradedQuantityPercentageChange(sd.getValue(),TDayTradedQuantity.get(sd.getKey()));
 				tradedQuantityPercentageChangeForSymbols.put(sd.getKey(), tradedQuantityPercentageChange);
 			}
-			new TradedQuantityChangeFileWriter().writeDataForMultipleSymbolsOnADate(T_Minus1Date,tradedQuantityPercentageChangeForSymbols);
+			tradedQuantityChangeFileWriter = new TradedQuantityChangeFileWriter();
+			tradedQuantityChangeFileWriter.writeDataForMultipleSymbolsOnADate(T_Date,tradedQuantityPercentageChangeForSymbols);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			try {
+				tradedQuantityChangeFileWriter.closeFile();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 		

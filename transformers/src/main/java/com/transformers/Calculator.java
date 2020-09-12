@@ -36,8 +36,8 @@ public class Calculator {
 
 	public static Float calculatePricePercentageChange(ShareDataADay sd) {
 		Float value = null;
-		if(sd.getClosePrice()!=null  && sd.getOpenPrice()!=null) {
-			value = (sd.getClosePrice()-sd.getOpenPrice())*100/sd.getOpenPrice();				
+		if(sd.getClosePrice()!=null  && sd.getPrevClose()!=null) {
+			value = (sd.getClosePrice()-sd.getPrevClose())*100/sd.getPrevClose();				
 		}
 		return value;
 	}
@@ -46,8 +46,8 @@ public class Calculator {
 	public static Map<LocalDate,Double> calculateTradedQuantityPercentageChange(List<ShareDataADay> history) throws Exception {
 		
 		//check all shares are same
-		Set<String> symbols = history.stream().map(sd-> sd.getSymbol()).collect(Collectors.toSet());
-		if(symbols.size()>1) throw new RuntimeException("All symbols should be same "+ symbols);
+		//Set<String> symbols = history.stream().map(sd-> sd.getSymbol()).collect(Collectors.toSet());
+		//if(symbols.size()>1) throw new RuntimeException("All symbols should be same "+ symbols);
 		
 		Map<LocalDate,Double> tradedQuantityChange = new TreeMap<LocalDate,Double>();
 		Iterator<ShareDataADay> itr = history.iterator();

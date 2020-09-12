@@ -23,19 +23,18 @@ public class ShareDailyDataReader {
 				history.add(ShareDataADay.builder()
 						.symbol(row[0])
 						.series(row[1])
-						.openPrice(parseFloat(row[2]))
-						.highPrice(parseFloat(row[3]))
-						.lowPrice(parseFloat(row[4]))
-						.closePrice(parseFloat(row[5]))
-						.lastPrice(parseFloat(row[6]))
-						.prevClose(parseFloat(row[7]))
-						.totalTradedQuantity(parseLong(row[8]))
-						.turnover(parseFloat(row[9]))
-						.date(toDate(row[10],DateTimeFormatter.ofPattern("dd-MMM-yyyy")))
-						.numberOfTrades(parseLong(row[11].trim()))
-						.isin(row[12].trim())
-						//.averagePrice(parseFloat(row[9]))
-						//.deliverableQty(parseLong(row[13]))
+						.date(toDate(row[2],DateTimeFormatter.ofPattern("dd-MMM-yyyy")))
+						.prevClose(parseFloat(row[3]))
+						.openPrice(parseFloat(row[4]))
+						.highPrice(parseFloat(row[5]))
+						.lowPrice(parseFloat(row[6]))
+						.lastPrice(parseFloat(row[7]))
+						.closePrice(parseFloat(row[8]))
+						.averagePrice(parseFloat(row[9]))
+						.totalTradedQuantity(parseLong(row[10]))
+						.turnover(parseFloat(row[11]))
+						.numberOfTrades(parseLong(row[12].trim()))
+						.deliverableQty(parseLong(row[13]))
 						.build()
 						);
 	        }
@@ -46,6 +45,7 @@ public class ShareDailyDataReader {
 	}
 
 	private static Long parseLong(String number) {
+		number = number.trim();
 		if("-".equals(number))
 			return null;
 		else
@@ -53,7 +53,8 @@ public class ShareDailyDataReader {
 	}
 	
 	private static Float parseFloat(String number) {
-		if("-".equals(number))
+		number = number.trim();
+		if("-".equals(number)|| "".equals(number))
 			return null;
 		else
 			return Float.parseFloat(number.trim());
@@ -62,6 +63,7 @@ public class ShareDailyDataReader {
 	private static LocalDate toDate(String dt, DateTimeFormatter dateTimeFormatter) {
 		dt = dt.replace("AUG", "Aug");
 		dt = dt.replace("SEP", "Sep");
+		dt = dt.trim();
 		return LocalDate.parse(dt, dateTimeFormatter);
 	};
 
