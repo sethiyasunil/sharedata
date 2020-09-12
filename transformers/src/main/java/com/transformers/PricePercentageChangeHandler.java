@@ -23,7 +23,7 @@ public class PricePercentageChangeHandler {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}try {
-			percentageIncreaseFileWriter.closeFile();
+			if(percentageIncreaseFileWriter!=null) percentageIncreaseFileWriter.closeFile();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

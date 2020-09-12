@@ -20,7 +20,6 @@ public class TradesQuantityPercentageChangeHandler {
 				String symbol = share.getSymbol();
 				System.err.println("processing "+ symbol);
 				List<ShareDataADay> history = ShareHistoricDataReader.readFile(SharesManager.getSymbolFileHistoric(symbol));
-				if(history.size()==0) continue;
 				Map<LocalDate, Double> tradedQuantityPercentageChange = Calculator.calculateTradedQuantityPercentageChange(history);			
 				tradedQuantityChangeFileWriter.writeDataForaSymbol(symbol,tradedQuantityPercentageChange);
 				
@@ -59,7 +58,7 @@ public class TradesQuantityPercentageChangeHandler {
 			e.printStackTrace();
 		}finally{
 			try {
-				tradedQuantityChangeFileWriter.closeFile();
+				if(tradedQuantityChangeFileWriter!=null) tradedQuantityChangeFileWriter.closeFile();
 			}catch(Exception e) {
 				e.printStackTrace();
 			}

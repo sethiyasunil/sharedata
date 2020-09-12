@@ -104,9 +104,9 @@ public class TradedQuantityChangeFileWriter extends AbstractXlsWriter{
 	        Cell cell = row.getCell(cellIndex);
 	        if(cell==null) {
 	        	cell = row.createCell(cellIndex);
-		        cell.setCellStyle(doubleStyle);
 	        }	        
-			cell.setCellValue(e.getValue());	
+	        cell.setCellStyle(doubleStyle);
+			if(e.getValue()!=null) cell.setCellValue(e.getValue());	
 		}
 	}
 	

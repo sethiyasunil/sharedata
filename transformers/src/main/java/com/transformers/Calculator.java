@@ -65,6 +65,8 @@ public class Calculator {
 
 	public static Double calculateTotalTradedQuantityPercentageChange(ShareDataADay d1, ShareDataADay d2) {
 		Double value=null;
+		if(d1==null || d2==null) return null;
+		if(d1.getTotalTradedQuantity()==null || d2.getTotalTradedQuantity()==null) return null;
 		if(d1.getTotalTradedQuantity()!=null  && d2.getTotalTradedQuantity()!=null) {
 			value = (d2.getTotalTradedQuantity() - d1.getTotalTradedQuantity())*100.0/d1.getTotalTradedQuantity();	
 		}

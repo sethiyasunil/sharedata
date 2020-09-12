@@ -104,8 +104,8 @@ public class PercentageChangeFileWriter  extends AbstractXlsWriter{
 		        Cell cell = row.getCell(cellIndex);
 		        if(cell==null) {
 		        	cell = row.createCell(cellIndex);
-			        cell.setCellStyle(floatStyle);		        	
 		        }
+		        cell.setCellStyle(floatStyle);		        	
 				cell.setCellValue(e.getValue());
 			}
 	}
