@@ -17,8 +17,8 @@ public class PricePercentageChangeHandler {
 				String symbol = share.getSymbol();
 				System.err.println("processing "+ symbol);
 				List<ShareDataADay> history = ShareHistoricDataReader.readFile(SharesManager.getSymbolFileHistoric(symbol));
-				Map<LocalDate, Float> pericePercentageChange = Calculator.calculatePricePercentageChange(history);			
-				percentageIncreaseFileWriter.writeDataForaSymbol(symbol,pericePercentageChange);
+				//Map<LocalDate, Float> pericePercentageChange = Calculator.calculatePricePercentageChange(history);			
+				//percentageIncreaseFileWriter.writeDataForaSymbol(symbol,pericePercentageChange);
 			};
 		}catch(Exception e) {
 			e.printStackTrace();

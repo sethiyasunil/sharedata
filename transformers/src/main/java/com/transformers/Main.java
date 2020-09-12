@@ -8,14 +8,16 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		System.err.println(SharesManager.getAllShared().size());
 		PricePercentageChangeHandler.processHistoricData();
-		PricePercentageChangeHandler.mergeDailyFile("09-sep-2020sec_bhavdata_full.csv");	
-		PricePercentageChangeHandler.mergeDailyFile("10-sep-2020sec_bhavdata_full.csv");	
-		PricePercentageChangeHandler.mergeDailyFile("11-sep-2020sec_bhavdata_full.csv");
+		//PricePercentageChangeHandler.mergeDailyFile("09-sep-2020sec_bhavdata_full.csv");	
+		//PricePercentageChangeHandler.mergeDailyFile("10-sep-2020sec_bhavdata_full.csv");	
+		//PricePercentageChangeHandler.mergeDailyFile("11-sep-2020sec_bhavdata_full.csv");
 		
 		
 		//TradesQuantityPercentageChangeHandler.processHistoricData();
-		//TradesQuantityPercentageChangeHandler.mergeDailyFile("09-sep-2020sec_bhavdata_full.csv", "10-sep-2020sec_bhavdata_full.csv",LocalDate.of(2020, 9, 10));	
+		//TradesQuantityPercentageChangeHandler.mergeDailyFile("09-sep-2020sec_bhavdata_full.csv", "10-sep-2020sec_bhavdata_full.csv",LocalDate.of(2020, 9, 10));
+		//TradesQuantityPercentageChangeHandler.mergeDailyFile("10-sep-2020sec_bhavdata_full.csv", "11-sep-2020sec_bhavdata_full.csv",LocalDate.of(2020, 9, 11));
+		//TradesQuantityPercentageChangeHandler.mergeDailyFile("11-sep-2020sec_bhavdata_full.csv", "12-sep-2020sec_bhavdata_full.csv",LocalDate.of(2020, 9, 12));
+
 	}
 }

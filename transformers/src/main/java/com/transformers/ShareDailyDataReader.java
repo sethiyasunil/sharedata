@@ -1,5 +1,7 @@
 package com.transformers;
 
+import static com.transformers.Util.isEquity;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -20,6 +22,7 @@ public class ShareDailyDataReader {
 			CSVReader csvReader = new CSVReaderBuilder(filereader).withSkipLines(1).build();
 			List<String[]> allData = csvReader.readAll(); 
 			for (String[] row : allData) { 
+				if(!isEquity(row[1])) continue;
 				history.add(ShareDataADay.builder()
 						.symbol(row[0])
 						.series(row[1])
