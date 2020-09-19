@@ -33,8 +33,16 @@ public class Calculator {
 		return percentageIncrease;
 	}
 
-
 	public static Float calculatePricePercentageChange(ShareDataADay sd) {
+		Float value = null;
+		if(sd.getClosePrice()!=null  && sd.getPrevClose()!=null) {
+			value = (sd.getClosePrice()-sd.getPrevClose())*100/sd.getPrevClose();				
+		}
+		return value;
+	}
+	
+	
+	public static Float calculateDeliveredQuantityPercentageChange(ShareDataADay sd) {
 		Float value = null;
 		if(sd.getClosePrice()!=null  && sd.getPrevClose()!=null) {
 			value = (sd.getClosePrice()-sd.getPrevClose())*100/sd.getPrevClose();				
@@ -62,6 +70,25 @@ public class Calculator {
 		return tradedQuantityChange;
 	}
 
+	public static Map<LocalDate,Double> calculateDeliveredQuantityPercentageChange(List<ShareDataADay> history) throws Exception {
+		
+		//check all shares are same
+		//Set<String> symbols = history.stream().map(sd-> sd.getSymbol()).collect(Collectors.toSet());
+		//if(symbols.size()>1) throw new RuntimeException("All symbols should be same "+ symbols);
+		
+		Map<LocalDate,Double> deliveredQtyPercentageChange = new TreeMap<LocalDate,Double>();
+		Iterator<ShareDataADay> itr = history.iterator();
+		ShareDataADay d1 = itr.next();
+		while(itr.hasNext()) {
+			ShareDataADay d2 = itr.next();
+			Double value = getDeliveredQtyPercentageChange(d1,d2);
+			deliveredQtyPercentageChange.put(d2.getDate(), value);
+			d1 = d2;
+		}
+
+		return deliveredQtyPercentageChange;
+	}
+	
 
 	public static Double calculateTotalTradedQuantityPercentageChange(ShareDataADay d1, ShareDataADay d2) {
 		Double value=null;
@@ -72,4 +99,13 @@ public class Calculator {
 		}
 		return value;
 	}
+	public static Double getDeliveredQtyPercentageChange(ShareDataADay d1, ShareDataADay d2) {
+		Double value=null;
+		if(d1==null || d2==null) return null;
+		if(d1.getDeliverableQty()==null || d2.getDeliverableQty()==null) return null;
+		if(d1.getDeliverableQty()!=null  && d2.getDeliverableQty()!=null) {
+			value = (d2.getDeliverableQty() - d1.getDeliverableQty())*100.0/d1.getDeliverableQty();	
+		}
+		return value;
+	}	
 }

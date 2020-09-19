@@ -4,7 +4,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Workbook;
 
-public class AbstractXlsWriter {
+public class AbstractXlsWriter  {
 	
 	
 	CellStyle formatDecimalStyle(Workbook workbook, CreationHelper createHelper) {  
